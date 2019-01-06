@@ -1,26 +1,107 @@
 body {
-    background-color: rgb(218, 218, 218)
+  background-color: rgb(218, 218, 218);
 }
 
 .jumbotron {
-    margin-top: 70px;
-    margin-bottom: 1rem;
-    color:#343a40;
-    padding: 2rem;
+  margin-top: 4.5rem;
+  margin-bottom: 1rem;
+  color: #343a40;
+  padding: 1rem;
+}
+
+.jumbotron p {
+  margin:0
 }
 
 .logo {
-    width: 40px;
-    margin-right: 10px
-
+  width: 40px;
+  margin-right: 10px;
 }
 
 .buttons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px
 }
 .buttons button.my-btn {
-    margin-right: 5px;
-    margin-left: 5px
+  margin-right: 5px;
+  margin-left: 5px;
 }
+
+.pokerCard {
+  background-color: white;
+  height: 65px;
+  width: 40px;
+  border-radius: 5px;
+  border: solid 1px #343a40;
+  margin: 3px;
+  font-weight: 400;
+}
+
+span.txt {
+  margin-left: 5px;
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin: auto;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px
+}
+
+/*---Media Queries --*/
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .pokerCard {
+    height: 85px;
+    width: 60px;
+    font-size: 1.2rem;
+  }
+  .card-icon {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .pokerCard {
+    height: 95px;
+    width: 70px;
+  }
+  .card-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .jumbotron {
+    margin-bottom: 1rem;
+    padding: 2rem;
+  }
+  
+  .jumbotron p {
+      margin:5px
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+

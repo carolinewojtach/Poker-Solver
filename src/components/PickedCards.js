@@ -1,16 +1,9 @@
 import React from "react";
+import Card from "./Card";
 
-const PickedCards = props => {
-  const { onPick, cards } = props;
-  const cardList = cards.map(card => {
-    return (
-      <div key={card.id}>
-        Card: {card.figure} {card.suit}
-      </div>
-    );
-  });
+const PickedCards = ({ onPick, pickedCards, onReset }) => {
   return (
-    <div className="pickedCards">
+    <div>
       <div className="buttons">
         <button
           onClick={onPick}
@@ -19,10 +12,25 @@ const PickedCards = props => {
         >
           Draw cards
         </button>
-        <button type="button" className="my-btn btn btn-secondary ">
+
+        <button
+          onClick={onReset}
+          type="button"
+          className="my-btn btn btn-secondary "
+        >
           Reset cards
         </button>
-        <div>{cardList}</div>
+      </div>
+
+      <div className="cards">
+        {pickedCards.map(card => (
+          <Card
+            key={card.id}
+            id={card.id}
+            figure={card.figure}
+            suit={card.suit}
+          />
+        ))}
       </div>
     </div>
   );
