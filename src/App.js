@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navbar from "./components/Navbar";
 import Cards from "./components/Cards";
 import PickedCards from "./components/PickedCards";
+import Footer from "./components/Footer";
 import "./App.css";
 import Jumbotron from "./components/Jumbotron";
 
@@ -15,41 +16,46 @@ class App extends Component {
   };
 
   ////// DRAW 5 CARDS
-  get5cards = () => {
-    let indexes = [];
+  draw5cards = () => {
     let pickedCards = this.state.pickedCards;
-    let newCards = [...this.state.cards];
+    let cards = this.state.cards;
 
+    if (pickedCards.length !== 0) {
+      pickedCards.forEach(e => cards.push(e));
+      pickedCards = [];
+
+      cards.sort(function(a, b) {
+        return a.id - b.id;
+      });
+    }
+
+    let indexes = [];
     for (let i = 0; i < 5; i++) {
       let isDrawed = false;
 
       //czy wylosowano już tę kartę
       while (!isDrawed) {
-        let index = Math.floor(Math.random() * this.state.cards.length) - 1;
+        let index = Math.floor(Math.random() * cards.length);
+        console.log(index);
+        let matchFound = indexes.find(e => {
+          return e === index;
+        });
 
-        // let index = Math.floor(Math.random() * this.state.figures.length);
-        // let index2 = Math.floor(Math.random() * this.state.suits.length);
-
-        let matchFound = indexes.find(e => e[0] === index);
-        // let matchFound = indexes.find(e => e[0] === index && e[1] === index2);
-
-        //czy index i index2 jest w tablicy
         if (matchFound === undefined) {
           let pickedCard = this.state.cards.find(c => c.id === index);
           pickedCards.push(pickedCard);
 
-          newCards = newCards.filter(c => c.id !== index);
-          console.log(newCards);
+          cards = cards.filter(c => c.id !== index);
 
           indexes.push(index);
-          // indexes.push([index, index2]);
           isDrawed = true;
+          console.log("wylosowano karte" + i);
         }
       }
     }
 
     this.setState({
-      cards: newCards,
+      cards,
       pickedCards
     });
   };
@@ -91,15 +97,14 @@ class App extends Component {
   }
 
   getCard = id => {
-    console.log("card picked " + id);
+    if (this.state.pickedCards.length < 5) {
+      console.log("card picked " + id);
 
-    const cards = this.state.cards.filter(c => c.id !== id);
-    const pickedCard = this.state.cards.find(c => c.id === id);
+      const cards = this.state.cards.filter(c => c.id !== id);
+      const pickedCard = this.state.cards.find(c => c.id === id);
 
-    let pickedCards = this.state.pickedCards;
-    pickedCards.push(pickedCard);
-
-    if (this.state.pickedCards.length < 6) {
+      let pickedCards = this.state.pickedCards;
+      pickedCards.push(pickedCard);
       this.setState({
         cards,
         pickedCards
@@ -110,15 +115,14 @@ class App extends Component {
   handleReset = () => {
     let pickedCards = this.state.pickedCards;
     let cards = this.state.cards;
+
+    console.log("reset");
     pickedCards.forEach(e => cards.push(e));
     pickedCards = [];
 
     cards.sort(function(a, b) {
       return a.id - b.id;
     });
-
-    console.log("reset");
-    console.log(cards);
 
     this.setState({
       cards,
@@ -127,18 +131,24 @@ class App extends Component {
   };
 
   render() {
-    const { cards, pickedCards } = this.state;
+    const { cards } = this.state;
     return (
-      <div className="container">
-        <Navbar />
-        <Jumbotron />
+      <div className="page">
+        <div className="container">
+          <Navbar />
+          <Jumbotron />
 
-        <PickedCards
-          onPick={this.get5cards}
-          onReset={this.handleReset}
-          pickedCards={pickedCards}
-        />
-        <Cards cards={cards} getCard={this.getCard} />
+          <PickedCards
+            onDraw={this.draw5cards}
+            onReset={this.handleReset}
+            pickedCards={this.state.pickedCards}
+          />
+          <Cards cards={cards} getCard={this.getCard} />
+        </div>
+
+        <div className="footer">
+          <Footer />
+        </div>
       </div>
     );
   }

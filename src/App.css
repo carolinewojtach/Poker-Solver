@@ -1,9 +1,27 @@
-body {
-  background-color: rgb(218, 218, 218);
+html, body {
+  background-color: rgb(212, 212, 212); 
+  height: 100%;
+}
+#root, body{
+ height: 100%;
+} 
+
+.container {
+  padding-bottom: 80px;  min-height: 100%;
 }
 
+.page{
+  height: 100%;
+}
+
+.navbar {
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(43, 83, 51)
+}
 .jumbotron {
-  margin-top: 4.5rem;
+  margin-top: 5rem;
   margin-bottom: 1rem;
   color: #343a40;
   padding: 1rem;
@@ -23,21 +41,23 @@ body {
   align-items: center;
   justify-content: center;
   padding-top: 10px;
-  padding-bottom: 10px
+  padding-bottom: 10px;
 }
 .buttons button.my-btn {
   margin-right: 5px;
   margin-left: 5px;
+  background-color: rgb(43, 83, 51)
 }
 
 .pokerCard {
   background-color: white;
-  height: 65px;
-  width: 40px;
+  height: 60px;
+  width: 35px;
   border-radius: 5px;
   border: solid 1px #343a40;
   margin: 3px;
   font-weight: 400;
+  box-shadow: 2px 2px 8px -1px rgba(0,0,0,0.28);
 }
 
 span.txt {
@@ -53,27 +73,61 @@ span.txt {
   margin: auto;
 }
 
-.cards {
+.picked-cards {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 1rem;
+  padding-top: 1.5rem;
   align-items: center;
   justify-content: center;
-  padding-bottom: 10px
+  padding-bottom: 0.5rem
+}
+
+.cards-all {
+  width: 100%;
+  border-radius: .3rem;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1.5rem 0.7rem;
+  /* margin-top: 1.5rem; */
+  align-items: center;
+  justify-content: center;
+  background-color: #e9ecef;
+  right: 0;
+  left: 0;
+}
+
+.empty-cards{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer {
+  display: flex;
+  margin-top: -60px;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(43, 83, 51); 
+  height: 60px;
+width: 100%;
 }
 
 /*---Media Queries --*/
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
   .pokerCard {
-    height: 85px;
-    width: 60px;
+    height: 75px;
+    width: 50px;
     font-size: 1.2rem;
   }
   .card-icon {
     width: 40px;
     height: 40px;
   }
+  .cards-all {
+  padding: 1.5rem 1.5rem;
+}
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -89,7 +143,7 @@ span.txt {
 
   .jumbotron {
     margin-bottom: 1rem;
-    padding: 2rem;
+    padding: 1.5rem;
   }
   
   .jumbotron p {
