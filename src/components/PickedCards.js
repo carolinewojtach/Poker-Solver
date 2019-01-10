@@ -4,38 +4,25 @@ import EmptyCard from "./EmptyCard";
 import Repeat from "react-repeat-component";
 
 const PickedCards = props => {
-  const { onDraw, pickedCards, onReset } = props;
-
-  const list = pickedCards.map(card => {
-    return (
-      <Card key={card.id} id={card.id} figure={card.figure} suit={card.suit} />
-    );
-  });
-
+  const { pickedCards } = props;
+  const numberOfPicked = pickedCards.length;
   const numberOfEmpty = 5 - pickedCards.length;
 
   return (
-    <div>
-      <div className="buttons">
-        <button
-          onClick={onDraw}
-          type="button"
-          className="my-btn btn btn-secondary"
-        >
-          Draw cards
-        </button>
-
-        <button
-          onClick={onReset}
-          type="button"
-          className="my-btn btn btn-secondary "
-        >
-          Reset cards
-        </button>
-      </div>
-      <div className="cards">
-        {list}
-        <Repeat times={numberOfEmpty} className="empty-cards">
+    <div className="picked-cards col-sm-12 col-md-6">
+      <div className="flexAndCenter">
+        {/* {list} */}
+        <Repeat times={numberOfPicked} className="flexAndCenter">
+          {i => (
+            <Card
+              key={pickedCards[i].id}
+              id={pickedCards[i].id}
+              figure={pickedCards[i].figure}
+              suit={pickedCards[i].suit}
+            />
+          )}
+        </Repeat>
+        <Repeat times={numberOfEmpty} className="flexAndCenter">
           {i => <EmptyCard key={i + 100} id={i + 100} />}
         </Repeat>
       </div>

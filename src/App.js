@@ -5,6 +5,7 @@ import PickedCards from "./components/PickedCards";
 import Footer from "./components/Footer";
 import "./App.css";
 import Jumbotron from "./components/Jumbotron";
+import Buttons from "./components/Buttons";
 
 class App extends Component {
   state = {
@@ -12,7 +13,7 @@ class App extends Component {
     suits: ["diamond", "club", "heart", "spade"],
     cards: [],
     pickedCards: [],
-    clicks: 1
+    result: "Your poker hand - Straight"
   };
 
   ////// DRAW 5 CARDS
@@ -135,14 +136,17 @@ class App extends Component {
     return (
       <div className="page">
         <div className="container">
+          <div className="push" />
           <Navbar />
           <Jumbotron />
-
-          <PickedCards
-            onDraw={this.draw5cards}
-            onReset={this.handleReset}
-            pickedCards={this.state.pickedCards}
-          />
+          <div className="row">
+            <Buttons
+              result={this.state.result}
+              onDraw={this.draw5cards}
+              onReset={this.handleReset}
+            />
+            <PickedCards pickedCards={this.state.pickedCards} />
+          </div>
           <Cards cards={cards} getCard={this.getCard} />
         </div>
 
