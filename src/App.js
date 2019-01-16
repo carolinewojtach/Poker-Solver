@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import "./App.css";
 import Jumbotron from "./components/Jumbotron";
 import Buttons from "./components/Buttons";
+import Solution from "./components/Solution";
 
 class App extends Component {
   state = {
@@ -132,7 +133,7 @@ class App extends Component {
   };
 
   render() {
-    const { cards } = this.state;
+    const { cards, pickedCards, figures } = this.state;
     return (
       <div className="page">
         <div className="container">
@@ -140,12 +141,9 @@ class App extends Component {
           <Navbar />
           <Jumbotron />
           <div className="row">
-            <Buttons
-              result={this.state.result}
-              onDraw={this.draw5cards}
-              onReset={this.handleReset}
-            />
-            <PickedCards pickedCards={this.state.pickedCards} />
+            <Buttons onDraw={this.draw5cards} onReset={this.handleReset} />
+            <Solution pickedCards={pickedCards} />
+            <PickedCards pickedCards={pickedCards} figures={figures} />
           </div>
           <Cards cards={cards} getCard={this.getCard} />
         </div>

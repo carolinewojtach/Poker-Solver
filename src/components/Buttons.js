@@ -1,7 +1,7 @@
 import React from "react";
 
 const Buttons = props => {
-  const { onDraw, onReset, result } = props;
+  const { onDraw, onReset } = props;
   return (
     <div className="buttons col-sm-12 col-md-6">
       <div className="row justify-content-around">
@@ -20,9 +20,6 @@ const Buttons = props => {
         >
           Reset cards
         </button>
-        <div className="result font-weight-bold col-12 ">
-          <p>{result}</p>
-        </div>
       </div>
     </div>
   );

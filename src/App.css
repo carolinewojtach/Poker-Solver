@@ -32,6 +32,9 @@ html, body {
   padding: 1rem;
 }
 
+.jumbotron p{
+  margin: 0;
+}
 .buttons {
  padding: 18px 10px;
 
@@ -143,9 +146,6 @@ span.txt {
     padding: 1.5rem;
   }
   
-  .jumbotron p {
-      margin:5px
-  }
 }
 
 /* Large devices (desktops, 992px and up) */
