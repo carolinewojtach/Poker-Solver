@@ -45,13 +45,12 @@ html, body {
 }
 
 .result {
-padding-top: 25px;  
+padding-top: 10px;  
 text-align: center;
 }
 .result p {
    margin: 0;
    font-size: 20px;
- 
 }
 
 span.txt {

@@ -7,6 +7,7 @@ import "./App.css";
 import Jumbotron from "./components/Jumbotron";
 import Buttons from "./components/Buttons";
 import Solution from "./components/Solution";
+import AlertReset from "./components/AlertReset";
 
 class App extends Component {
   state = {
@@ -14,7 +15,8 @@ class App extends Component {
     suits: ["diamond", "club", "heart", "spade"],
     cards: [],
     pickedCards: [],
-    result: "Your poker hand - Straight"
+    result: "Your poker hand - Straight",
+    modalIsVisible: false
   };
 
   ////// DRAW 5 CARDS
@@ -38,7 +40,7 @@ class App extends Component {
       //czy wylosowano już tę kartę
       while (!isDrawed) {
         let index = Math.floor(Math.random() * cards.length);
-        console.log(index);
+
         let matchFound = indexes.find(e => {
           return e === index;
         });
@@ -111,6 +113,11 @@ class App extends Component {
         cards,
         pickedCards
       });
+    } else {
+      console.log("RESET MODEL");
+      this.setState({
+        modalIsVisible: true
+      });
     }
   };
 
@@ -142,8 +149,9 @@ class App extends Component {
           <Jumbotron />
           <div className="row">
             <Buttons onDraw={this.draw5cards} onReset={this.handleReset} />
-            <Solution pickedCards={pickedCards} />
-            <PickedCards pickedCards={pickedCards} figures={figures} />
+            {/* {this.state.modalIsVisible && <AlertReset /> */}
+            <PickedCards pickedCards={pickedCards} />
+            <Solution pickedCards={pickedCards} figures={figures} />
           </div>
           <Cards cards={cards} getCard={this.getCard} />
         </div>
