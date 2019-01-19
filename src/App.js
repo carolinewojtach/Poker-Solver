@@ -7,7 +7,6 @@ import "./App.css";
 import Jumbotron from "./components/Jumbotron";
 import Buttons from "./components/Buttons";
 import Solution from "./components/Solution";
-import AlertReset from "./components/AlertReset";
 
 class App extends Component {
   state = {
@@ -149,7 +148,6 @@ class App extends Component {
           <Jumbotron />
           <div className="row">
             <Buttons onDraw={this.draw5cards} onReset={this.handleReset} />
-            {/* {this.state.modalIsVisible && <AlertReset /> */}
             <PickedCards pickedCards={pickedCards} />
             <Solution pickedCards={pickedCards} figures={figures} />
           </div>
