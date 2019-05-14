@@ -3,19 +3,18 @@ import Navbar from "./components/Navbar";
 import Cards from "./components/Cards";
 import PickedCards from "./components/PickedCards";
 import Footer from "./components/Footer";
-import "./App.css";
 import Jumbotron from "./components/Jumbotron";
 import Buttons from "./components/Buttons";
 import Solution from "./components/Solution";
+
+import "./App.css";
 
 class App extends Component {
   state = {
     figures: ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"],
     suits: ["diamond", "club", "heart", "spade"],
     cards: [],
-    pickedCards: [],
-    result: "Your poker hand - Straight",
-    modalIsVisible: false
+    pickedCards: []
   };
 
   ////// DRAW 5 CARDS
@@ -52,7 +51,6 @@ class App extends Component {
 
           indexes.push(index);
           isDrawed = true;
-          console.log("wylosowano karte" + i);
         }
       }
     }
@@ -64,28 +62,28 @@ class App extends Component {
   };
 
   componentWillMount() {
-    let newCards = [];
+    let cards = [];
     for (let i = 0; i < 52; i++) {
       if (i < 13) {
-        newCards.push({
+        cards.push({
           id: i,
           figure: this.state.figures[i],
           suit: this.state.suits[0]
         });
       } else if (i >= 13 && i < 26) {
-        newCards.push({
+        cards.push({
           id: i,
           figure: this.state.figures[i - 13],
           suit: this.state.suits[1]
         });
       } else if (i >= 26 && i < 39) {
-        newCards.push({
+        cards.push({
           id: i,
           figure: this.state.figures[i - 26],
           suit: this.state.suits[2]
         });
       } else {
-        newCards.push({
+        cards.push({
           id: i,
           figure: this.state.figures[i - 39],
           suit: this.state.suits[3]
@@ -94,28 +92,18 @@ class App extends Component {
     }
 
     this.setState({
-      cards: newCards
+      cards
     });
-    console.log(this.state.cards);
   }
 
   getCard = id => {
     if (this.state.pickedCards.length < 5) {
-      console.log("card picked " + id);
-
       const cards = this.state.cards.filter(c => c.id !== id);
       const pickedCard = this.state.cards.find(c => c.id === id);
 
-      let pickedCards = this.state.pickedCards;
-      pickedCards.push(pickedCard);
       this.setState({
         cards,
-        pickedCards
-      });
-    } else {
-      console.log("RESET MODEL");
-      this.setState({
-        modalIsVisible: true
+        pickedCards: [...this.state.pickedCards, pickedCard]
       });
     }
   };
@@ -124,7 +112,6 @@ class App extends Component {
     let pickedCards = this.state.pickedCards;
     let cards = this.state.cards;
 
-    console.log("reset");
     pickedCards.forEach(e => cards.push(e));
     pickedCards = [];
 

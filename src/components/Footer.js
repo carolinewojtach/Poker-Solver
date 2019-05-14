@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class Footer extends Component {
-  render() {
-    return (
-      <div className="text-muted">© 2018 Poker Solver All Rights Reserved</div>
-    );
-  }
-}
+const Footer = () => {
+  return (
+    <div className="text-muted">© 2018 Poker Solver All Rights Reserved</div>
+  );
+};
+
+export default Footer;

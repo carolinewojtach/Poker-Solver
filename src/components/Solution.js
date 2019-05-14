@@ -1,35 +1,23 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class Solution extends Component {
-  constructor() {
-    super();
-    this.state = { result: "" };
-    this.checkCards = this.checkCards.bind(this);
-    this.countFigures = this.countFigures.bind(this);
-    this.checkFigures = this.checkFigures.bind(this);
-    this.countSuits = this.countSuits.bind(this);
-    this.checkSuits = this.checkSuits.bind(this);
-    this.checkOrder = this.checkOrder.bind(this);
-    this.getHighCard = this.getHighCard.bind(this);
-  }
-
+const Solution = ({ pickedCards, figures }) => {
   //////MAIN FUNCTION
-  checkCards = (cards, figures) => {
-    let figureValues = this.countFigures(cards); //call figure counter
-    let firstCheck = this.checkFigures(figureValues);
+  function checkCards(cards, figures) {
+    let figureValues = countFigures(cards); //call figure counter
+    let firstCheck = checkFigures(figureValues);
 
     //second check- suits
     if (firstCheck === false) {
-      let countSuitsArr = this.countSuits(cards); //call suit counter
-      let secondCheck = this.checkSuits(figureValues, countSuitsArr);
+      let countSuitsArr = countSuits(cards); //call suit counter
+      let secondCheck = checkSuits(figureValues, countSuitsArr);
       if (secondCheck === false) {
-        let thirdCheck = this.getHighCard(cards, figures);
+        let thirdCheck = getHighCard(cards, figures);
         return "Your high card is " + thirdCheck;
       } else return "Your poker hand is " + secondCheck;
     } else return "Your poker hand is " + firstCheck;
-  };
+  }
   //FIGURE COUNTER
-  countFigures = cards => {
+  function countFigures(cards) {
     let counts = {
       "2": 0,
       "3": 0,
@@ -54,10 +42,10 @@ export default class Solution extends Component {
 
     let figureValues = Object.values(counts); //zapisuje wartości counts do arraya
     return figureValues;
-  };
+  }
 
   //CHECK FIGURES SETS
-  checkFigures = countFiguresArr => {
+  function checkFigures(countFiguresArr) {
     // console.log(JSON.stringify(countFiguresArr));
     //CHECK FOR 2,3 OR 4 SAME CARDS
     let pairs = 0,
@@ -87,10 +75,10 @@ export default class Solution extends Component {
     } else {
       return false; //none of the above sets
     }
-  };
+  }
 
   //COLORS COUNTER
-  countSuits = cards => {
+  function countSuits(cards) {
     let counts = {
       diamond: 0,
       club: 0,
@@ -105,12 +93,11 @@ export default class Solution extends Component {
     //console.log(JSON.stringify(counts));
 
     let suitValues = Object.values(counts); //zapisuje wartości counts do arraya
-    //console.log(suitValues);
-
     return { suitValues };
-  };
+  }
+
   //CHECK SUITS SETS AND OTHERS
-  checkSuits = (countFiguresArr, countSuitsArr) => {
+  function checkSuits(countFiguresArr, countSuitsArr) {
     //console.log(JSON.stringify(countFiguresArr), JSON.stringify(countSuitsArr));
 
     //check if all 5 cards have same suit
@@ -124,7 +111,7 @@ export default class Solution extends Component {
         oneSuit = true;
     }
 
-    let result = this.checkOrder(countFiguresArr);
+    let result = checkOrder(countFiguresArr);
 
     if (oneSuit === true) {
       if (result === "succeeding numbers - 10 to ace") {
@@ -140,10 +127,10 @@ export default class Solution extends Component {
     ) {
       return "a STRAIGHT!";
     } else return false; //none of the above sets
-  };
+  }
 
   //CHECK ORDER OF CARDS
-  checkOrder = countFiguresArr => {
+  function checkOrder(countFiguresArr) {
     let indexes = [];
     for (let i = 0; i < 13; i++) {
       if (countFiguresArr[i] === 1 || countFiguresArr[i] === "1")
@@ -167,10 +154,10 @@ export default class Solution extends Component {
     if (counter1 === 4) return "succeeding numbers - 10 to ace";
     else if (counter2 === 4) return "succeeding numbers";
     else if (counter3 > 0) return "not succeeding numbers";
-  };
+  }
 
   // CHECK HIGH CARD
-  getHighCard = (cards, figures) => {
+  function getHighCard(cards, figures) {
     let indexes = [];
 
     for (let i = 0; i < 5; i++) {
@@ -193,22 +180,16 @@ export default class Solution extends Component {
     }
     let suit = cards[indexes.indexOf(max)].suit;
     return fig + " " + suit + ".";
-  };
-
-  render() {
-    const { pickedCards, figures } = this.props;
-
-    if (this.props.pickedCards.length === 5) {
-      return (
-        <div className="result font-weight-bold col-12 ">
-          <p>{this.checkCards(pickedCards, figures)}</p>
-        </div>
-      );
-    } else
-      return (
-        <div className="result font-weight-bold col-12 ">
-          <p>Your poker hand is ...</p>
-        </div>
-      );
   }
-}
+
+  return (
+    <div className="result font-weight-bold col-12 ">
+      {pickedCards.length === 5 ? (
+        <p>{checkCards(pickedCards, figures)}</p>
+      ) : (
+        <p>Your poker hand is ...</p>
+      )}
+    </div>
+  );
+};
+export default Solution;
