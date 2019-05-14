@@ -11,6 +11,7 @@ const PickedCards = props => {
   return (
     <div className="picked-cards col-sm-12 col-md-6">
       <div className="flexAndCenter">
+        {/* {list} */}
         <Repeat times={numberOfPicked} className="flexAndCenter">
           {i => (
             <Card

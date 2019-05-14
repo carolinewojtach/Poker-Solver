@@ -1,23 +1,35 @@
-import React from "react";
+import React, { Component } from "react";
 
-const Solution = ({ pickedCards, figures }) => {
+export default class Solution extends Component {
+  constructor() {
+    super();
+    this.state = { result: "" };
+    this.checkCards = this.checkCards.bind(this);
+    this.countFigures = this.countFigures.bind(this);
+    this.checkFigures = this.checkFigures.bind(this);
+    this.countSuits = this.countSuits.bind(this);
+    this.checkSuits = this.checkSuits.bind(this);
+    this.checkOrder = this.checkOrder.bind(this);
+    this.getHighCard = this.getHighCard.bind(this);
+  }
+
   //////MAIN FUNCTION
-  function checkCards(cards, figures) {
-    let figureValues = countFigures(cards); //call figure counter
-    let firstCheck = checkFigures(figureValues);
+  checkCards = (cards, figures) => {
+    let figureValues = this.countFigures(cards); //call figure counter
+    let firstCheck = this.checkFigures(figureValues);
 
     //second check- suits
     if (firstCheck === false) {
-      let countSuitsArr = countSuits(cards); //call suit counter
-      let secondCheck = checkSuits(figureValues, countSuitsArr);
+      let countSuitsArr = this.countSuits(cards); //call suit counter
+      let secondCheck = this.checkSuits(figureValues, countSuitsArr);
       if (secondCheck === false) {
-        let thirdCheck = getHighCard(cards, figures);
+        let thirdCheck = this.getHighCard(cards, figures);
         return "Your high card is " + thirdCheck;
       } else return "Your poker hand is " + secondCheck;
     } else return "Your poker hand is " + firstCheck;
-  }
+  };
   //FIGURE COUNTER
-  function countFigures(cards) {
+  countFigures = cards => {
     let counts = {
       "2": 0,
       "3": 0,
@@ -42,10 +54,10 @@ const Solution = ({ pickedCards, figures }) => {
 
     let figureValues = Object.values(counts); //zapisuje wartości counts do arraya
     return figureValues;
-  }
+  };
 
   //CHECK FIGURES SETS
-  function checkFigures(countFiguresArr) {
+  checkFigures = countFiguresArr => {
     // console.log(JSON.stringify(countFiguresArr));
     //CHECK FOR 2,3 OR 4 SAME CARDS
     let pairs = 0,
@@ -75,10 +87,10 @@ const Solution = ({ pickedCards, figures }) => {
     } else {
       return false; //none of the above sets
     }
-  }
+  };
 
   //COLORS COUNTER
-  function countSuits(cards) {
+  countSuits = cards => {
     let counts = {
       diamond: 0,
       club: 0,
@@ -93,11 +105,12 @@ const Solution = ({ pickedCards, figures }) => {
     //console.log(JSON.stringify(counts));
 
     let suitValues = Object.values(counts); //zapisuje wartości counts do arraya
-    return { suitValues };
-  }
+    //console.log(suitValues);
 
+    return { suitValues };
+  };
   //CHECK SUITS SETS AND OTHERS
-  function checkSuits(countFiguresArr, countSuitsArr) {
+  checkSuits = (countFiguresArr, countSuitsArr) => {
     //console.log(JSON.stringify(countFiguresArr), JSON.stringify(countSuitsArr));
 
     //check if all 5 cards have same suit
@@ -111,7 +124,7 @@ const Solution = ({ pickedCards, figures }) => {
         oneSuit = true;
     }
 
-    let result = checkOrder(countFiguresArr);
+    let result = this.checkOrder(countFiguresArr);
 
     if (oneSuit === true) {
       if (result === "succeeding numbers - 10 to ace") {
@@ -127,10 +140,10 @@ const Solution = ({ pickedCards, figures }) => {
     ) {
       return "a STRAIGHT!";
     } else return false; //none of the above sets
-  }
+  };
 
   //CHECK ORDER OF CARDS
-  function checkOrder(countFiguresArr) {
+  checkOrder = countFiguresArr => {
     let indexes = [];
     for (let i = 0; i < 13; i++) {
       if (countFiguresArr[i] === 1 || countFiguresArr[i] === "1")
@@ -154,10 +167,10 @@ const Solution = ({ pickedCards, figures }) => {
     if (counter1 === 4) return "succeeding numbers - 10 to ace";
     else if (counter2 === 4) return "succeeding numbers";
     else if (counter3 > 0) return "not succeeding numbers";
-  }
+  };
 
   // CHECK HIGH CARD
-  function getHighCard(cards, figures) {
+  getHighCard = (cards, figures) => {
     let indexes = [];
 
     for (let i = 0; i < 5; i++) {
@@ -180,16 +193,22 @@ const Solution = ({ pickedCards, figures }) => {
     }
     let suit = cards[indexes.indexOf(max)].suit;
     return fig + " " + suit + ".";
-  }
+  };
 
-  return (
-    <div className="result font-weight-bold col-12 ">
-      {pickedCards.length === 5 ? (
-        <p>{checkCards(pickedCards, figures)}</p>
-      ) : (
-        <p>Your poker hand is ...</p>
-      )}
-    </div>
-  );
-};
-export default Solution;
+  render() {
+    const { pickedCards, figures } = this.props;
+
+    if (this.props.pickedCards.length === 5) {
+      return (
+        <div className="result font-weight-bold col-12 ">
+          <p>{this.checkCards(pickedCards, figures)}</p>
+        </div>
+      );
+    } else
+      return (
+        <div className="result font-weight-bold col-12 ">
+          <p>Your poker hand is ...</p>
+        </div>
+      );
+  }
+}
