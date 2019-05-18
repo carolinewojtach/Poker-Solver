@@ -3,15 +3,13 @@ import Card from "./Card";
 import EmptyCard from "./EmptyCard";
 import Repeat from "react-repeat-component";
 
-const PickedCards = props => {
-  const { pickedCards } = props;
+const PickedCards = ({ pickedCards }) => {
   const numberOfPicked = pickedCards.length;
   const numberOfEmpty = 5 - pickedCards.length;
 
   return (
     <div className="picked-cards col-sm-12 col-md-6">
       <div className="flexAndCenter">
-        {/* {list} */}
         <Repeat times={numberOfPicked} className="flexAndCenter">
           {i => (
             <Card
